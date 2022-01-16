@@ -1,0 +1,52 @@
+/* default values that can be overwritten by more specific selectors */
+.kartana ul{
+    /* can be overwritten by .kartana .option:hover */
+    width: 100%;
+    max-height: 100px;
+    background: #fff;
+    border: 1px solid #aaa;
+    padding: 0;
+}
+.kartana > input + ul > li:hover{
+    /* can be overwritten by .kartana .option:hover */
+    background: #eee;
+}
+.kartana > input + ul > li.highlighted{
+    /* can be overwritten by .kartana .option.highlighted */
+    background: #ccc;
+}
+.kartana > input + ul > div {
+    font-size: 0.5em;
+    background: #eee;
+    text-align: right;
+    padding: 1px;
+}
+/* functional CSS that should not be modified or overwritten
+   unless you know what you are doing */
+.kartana.combobox{
+    position: relative;
+}
+.kartana.combobox > .input{
+    box-sizing: border-box;
+    width: 100%;
+}
+.kartana.combobox > .menu:empty{
+    display: none;
+}
+.kartana.combobox > .menu{
+    position: absolute;
+    z-index: 999;
+    list-style-type: none;
+    margin: 0;
+    overflow: auto;
+    visibility: hidden;
+    transition-property: visibility;
+    transition-delay: 50ms;
+}
+.kartana.combobox > .input:focus + .menu,
+.kartana.combobox > .input + .menu:active{
+    visibility: visible;
+    transition-property: visibility;
+    transition-delay: 0ms;
+}
+

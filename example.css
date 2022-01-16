@@ -1,0 +1,47 @@
+/* Adressvorschläge die mit anderen Angaben kollidieren */
+.no-context-match{
+    color: #aaa;
+}
+
+/* Benutzerdefiniertes Styling des von Eingabefeld und Adressvorschlägen (Beispiel 3) */
+.custom-style .kartana.combobox .input{
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+}
+.custom-style .kartana.combobox .input:focus{
+    border-color: #fff;
+    outline: 1px solid #ccc;
+}
+.custom-style .kartana.combobox .menu{
+    border: none;
+    outline: 1px solid #ccc;
+    box-shadow: 0 3px 2px -1px rgba(0,0,0,0.5);
+}
+.custom-style .kartana.combobox .option{
+    padding: 4px 20px 4px 4px;
+    background: #fefefe;
+    white-space: nowrap;
+}
+.custom-style .kartana.combobox .option:hover{
+    background: #e0e0e0;
+}
+.custom-style .kartana.combobox .option.highlighted{
+    border-left: 5px solid #0879b0;
+    background: #a4daec;
+}
+
+/* Styling des Adressformulars (nicht kartana-spezifisch)*/
+form{
+    width: 300px;
+}
+input {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 5px 0
+}
+fieldset {
+    border: none
+}
