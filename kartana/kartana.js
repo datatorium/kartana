@@ -18,7 +18,6 @@ var kartana;
         AddressFieldType["postcode"] = "postcode";
         AddressFieldType["municipality"] = "municipality";
         AddressFieldType["street"] = "street";
-        AddressFieldType["housenumber"] = "houseNumber";
     })(AddressFieldType = kartana.AddressFieldType || (kartana.AddressFieldType = {}));
     var Throttler = /** @class */ (function () {
         function Throttler(minDelay, maxDelay) {
@@ -56,6 +55,8 @@ var kartana;
         Object.defineProperty(API, "singleton", {
             get: function () {
                 if (API._singleton === undefined) {
+                    /* Please do not lower the minimum request delay. It is optimised for the best user experience without
+                    putting unnecessary load on the API server. Thank you :) */
                     API._singleton = new API("https://api.kartana.de/public/autocomplete", 200, 500);
                 }
                 return API._singleton;
@@ -145,7 +146,7 @@ var kartana;
                 throw "Address field of type " + field.fieldType + " is already registered for address '" + this.id + "'";
             }
         };
-        AddressFieldType.postcode, AddressFieldType.municipality, AddressFieldType.street, AddressFieldType.housenumber;
+        AddressFieldType.postcode, AddressFieldType.municipality, AddressFieldType.street;
         Address.register = {};
         return Address;
     }());
@@ -156,16 +157,23 @@ var kartana;
             this.element = element;
             this.element.classList.add('input');
             this.element.setAttribute('autocomplete', 'off');
-            this.element.addEventListener('focus', this.onFocus.bind(this));
-            this.element.addEventListener('blur', this.onBlur.bind(this));
-            this.fieldType = AddressFieldType[this.element.getAttribute('data-kartana-field')];
+            var fieldType = this.element.getAttribute('data-kartana-field');
+            this.fieldType = AddressFieldType[fieldType];
+            if (this.fieldType === undefined) {
+                throw "Autocomplete is only supported for 'postcode', 'municipality' and 'street' (not '" + fieldType + "')";
+            }
             var addressId = this.element.getAttribute('data-kartana-address');
             this.address = Address.lookup(addressId, true);
             this.address.registerField(this);
+            this.element.addEventListener('focus', this.onFocus.bind(this));
+            this.element.addEventListener('blur', this.onBlur.bind(this));
             this.element.addEventListener('input', this.onInput.bind(this));
         }
         AddressField.prototype.triggerSuggestions = function () {
-            this.combobox.suggestionBox.requestSuggestions();
+            if (this.fieldType !== undefined) {
+                this.combobox.suggestionBox.open();
+                this.combobox.suggestionBox.requestSuggestions();
+            }
         };
         AddressField.prototype.onInput = function () {
             this.triggerSuggestions();
@@ -198,6 +206,7 @@ var kartana;
     }());
     var SuggestionBox = /** @class */ (function () {
         function SuggestionBox(combobox) {
+            this.isClosed = false;
             this.options = [];
             this.element = document.createElement('ul');
             this.element.classList.add('menu');
@@ -212,6 +221,14 @@ var kartana;
             enumerable: false,
             configurable: true
         });
+        SuggestionBox.prototype.close = function () {
+            this.isClosed = true;
+            this.element.classList.add('closed');
+        };
+        SuggestionBox.prototype.open = function () {
+            this.isClosed = false;
+            this.element.classList.remove('closed');
+        };
         SuggestionBox.prototype.requestSuggestions = function () {
             API.complete(this.handleSuggestions.bind(this), {
                 version: '1.0',
@@ -247,27 +264,28 @@ var kartana;
             }
             var terminateEvent = false;
             if (event.keyCode === KeyCode.DOWN) {
+                this.open();
                 this.highlightNextOption();
                 terminateEvent = true;
             }
             else if (event.keyCode === KeyCode.UP) {
+                this.open();
                 this.highlightPreviousOption();
                 terminateEvent = true;
             }
             else if (event.keyCode == KeyCode.RETURN) {
-                this.selectOption(this.highlightedOption);
+                if (!this.isClosed) {
+                    this.selectOption(this.highlightedOption);
+                }
                 terminateEvent = true;
             }
             else if (event.keyCode == KeyCode.TAB) {
-                if (this.highlightedOptionIndex !== undefined) {
+                if (!this.isClosed && this.highlightedOptionIndex !== undefined) {
                     this.selectOption(this.highlightedOption);
                 }
             }
             else if (event.keyCode == KeyCode.ESC) {
-                if (this.highlightedOptionIndex !== undefined) {
-                    this.combobox.addressField.value = '';
-                    this.reset();
-                }
+                this.close();
             }
             if (terminateEvent) {
                 event.preventDefault();
@@ -301,7 +319,7 @@ var kartana;
         function Acknowledgement() {
             this.element = document.createElement('div');
             this.element.classList.add('acknowledgement');
-            this.element.innerHTML = "powered by <a href=\"https://kartana.de\" title=\"Autovervollst\u00E4ndigung f\u00FCr Adressformulare\">kartana</a>";
+            this.element.innerHTML = "powered by <a href=\"https://kartana.de\" title=\"Autovervollst\u00E4ndigung f\u00FCr Adressformulare\" tabindex=\"-1\">kartana</a>";
         }
         return Acknowledgement;
     }());

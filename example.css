@@ -4,14 +4,14 @@
 }
 
 /* Benutzerdefiniertes Styling des von Eingabefeld und Adressvorschlägen (Beispiel 3) */
-.custom-style .kartana.combobox .input{
+.custom-style input{
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 10px;
     outline: none;
     padding: 10px;
 }
-.custom-style .kartana.combobox .input:focus{
+.custom-style input:focus{
     border-color: #fff;
     outline: 1px solid #ccc;
 }

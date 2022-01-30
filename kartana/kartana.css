@@ -9,6 +9,7 @@
 }
 .kartana > input + ul > li:hover{
     /* can be overwritten by .kartana .option:hover */
+    cursor: pointer;
     background: #eee;
 }
 .kartana > input + ul > li.highlighted{
@@ -16,6 +17,10 @@
     background: #ccc;
 }
 .kartana > input + ul > div {
+    /* can be overwritten by .kartana .menu.acknowledgement
+    You are allowed to remove the link to kartana.de (display: none)
+    if you include a similar link to kartana.de on the same page
+    */
     font-size: 0.5em;
     background: #eee;
     text-align: right;
@@ -30,7 +35,8 @@
     box-sizing: border-box;
     width: 100%;
 }
-.kartana.combobox > .menu:empty{
+.kartana.combobox > .menu:empty,
+.kartana.combobox > .menu.closed {
     display: none;
 }
 .kartana.combobox > .menu{

@@ -9,14 +9,12 @@ namespace kartana{
     export enum AddressFieldType {
         postcode = 'postcode',
         municipality = 'municipality',
-        street = 'street',
-        housenumber ='houseNumber'
+        street = 'street'
     }
     export interface AddressSchema{
         [AddressFieldType.postcode]?: string,
         [AddressFieldType.municipality]?: string,
-        [AddressFieldType.street]?: string,
-        [AddressFieldType.housenumber]?: string,
+        [AddressFieldType.street]?: string
     }
     export interface CompletionRequest{
         version: '1.0'
@@ -61,6 +59,8 @@ namespace kartana{
         }
         private static get singleton(): API{
             if(API._singleton === undefined){
+                /* Please do not lower the minimum request delay. It is optimised for the best user experience without
+                putting unnecessary load on the API server. Thank you :) */
                 API._singleton = new API("https://api.kartana.de/public/autocomplete", 200, 500);
             }
             return API._singleton
@@ -115,7 +115,6 @@ namespace kartana{
         private [AddressFieldType.postcode]: AddressField;
         private [AddressFieldType.municipality]: AddressField;
         private [AddressFieldType.street]: AddressField;
-        private [AddressFieldType.housenumber]: AddressField;
         static register: {[id: string]: Address} = {}
         constructor(id){
             this.id = id
@@ -161,18 +160,26 @@ namespace kartana{
             this.element = element;
             this.element.classList.add('input');
             this.element.setAttribute('autocomplete','off');
-            this.element.addEventListener('focus', this.onFocus.bind(this))
-            this.element.addEventListener('blur', this.onBlur.bind(this))
 
-            this.fieldType = AddressFieldType[this.element.getAttribute('data-kartana-field')];
+            let fieldType = this.element.getAttribute('data-kartana-field')
+            this.fieldType = AddressFieldType[fieldType]
+            if(this.fieldType === undefined){
+                throw `Autocomplete is only supported for 'postcode', 'municipality' and 'street' (not '${fieldType}')`
+            }
+
             let addressId = this.element.getAttribute('data-kartana-address');
             this.address = Address.lookup(addressId,true);
             this.address.registerField(this);
 
+            this.element.addEventListener('focus', this.onFocus.bind(this))
+            this.element.addEventListener('blur', this.onBlur.bind(this))
             this.element.addEventListener('input', this.onInput.bind(this));
         }
         triggerSuggestions (){
-            this.combobox.suggestionBox.requestSuggestions();
+            if(this.fieldType !== undefined){
+                this.combobox.suggestionBox.open();
+                this.combobox.suggestionBox.requestSuggestions();
+            }
         }
         onInput(){
             this.triggerSuggestions()
@@ -197,6 +204,7 @@ namespace kartana{
     class SuggestionBox{
         readonly element: HTMLUListElement;
         readonly combobox: Combobox;
+        private isClosed: boolean = false;
         private options: Option[] = [];
         private highlightedOptionIndex: number;
         constructor(combobox: Combobox) {
@@ -208,6 +216,14 @@ namespace kartana{
         }
         get highlightedOption(){
             return this.options[this.highlightedOptionIndex];
+        }
+        close(){
+            this.isClosed = true;
+            this.element.classList.add('closed')
+        }
+        open(){
+            this.isClosed = false;
+            this.element.classList.remove('closed')
         }
         requestSuggestions(){
             API.complete(this.handleSuggestions.bind(this), {
@@ -243,23 +259,24 @@ namespace kartana{
             }
             let terminateEvent = false;
             if(event.keyCode === KeyCode.DOWN){
+                this.open();
                 this.highlightNextOption();
                 terminateEvent = true;
             }else if(event.keyCode === KeyCode.UP){
+                this.open();
                 this.highlightPreviousOption();
                 terminateEvent = true;
             }else if(event.keyCode == KeyCode.RETURN){
-                this.selectOption(this.highlightedOption);
+                if(!this.isClosed){
+                    this.selectOption(this.highlightedOption);
+                }
                 terminateEvent = true;
             }else if(event.keyCode == KeyCode.TAB){
-                if(this.highlightedOptionIndex !== undefined){
+                if(!this.isClosed && this.highlightedOptionIndex !== undefined){
                     this.selectOption(this.highlightedOption);
                 }
             }else if(event.keyCode == KeyCode.ESC){
-                if(this.highlightedOptionIndex !== undefined){
-                    this.combobox.addressField.value = '';
-                    this.reset();
-                }
+                this.close()
             }
             if(terminateEvent){
                 event.preventDefault();
@@ -294,7 +311,7 @@ namespace kartana{
         constructor() {
             this.element = document.createElement('div');
             this.element.classList.add('acknowledgement');
-            this.element.innerHTML = `powered by <a href="https://kartana.de" title="Autovervollständigung für Adressformulare">kartana</a>`
+            this.element.innerHTML = `powered by <a href="https://kartana.de" title="Autovervollständigung für Adressformulare" tabindex="-1">kartana</a>`
         }
     }
     class Option{
