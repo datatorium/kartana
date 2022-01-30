@@ -17,7 +17,7 @@ namespace kartana{
         [AddressFieldType.street]?: string
     }
     export interface CompletionRequest{
-        version: '1.0'
+        version: '1.1'
         complete: AddressFieldType;
         address?: AddressSchema;
     }
@@ -227,7 +227,7 @@ namespace kartana{
         }
         requestSuggestions(){
             API.complete(this.handleSuggestions.bind(this), {
-                version: '1.0',
+                version: '1.1',
                 complete: this.combobox.addressField.fieldType,
                 address: this.combobox.addressField.address.value
             })

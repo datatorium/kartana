@@ -231,7 +231,7 @@ var kartana;
         };
         SuggestionBox.prototype.requestSuggestions = function () {
             API.complete(this.handleSuggestions.bind(this), {
-                version: '1.0',
+                version: '1.1',
                 complete: this.combobox.addressField.fieldType,
                 address: this.combobox.addressField.address.value
             });
