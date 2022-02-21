@@ -1,6 +1,6 @@
 /* default values that can be overwritten by more specific selectors */
 .kartana ul{
-    /* can be overwritten by .kartana .option:hover */
+    /* can be overwritten by .kartana .menu */
     width: 100%;
     max-height: 100px;
     background: #fff;
@@ -24,7 +24,7 @@
     font-size: 0.5em;
     background: #eee;
     text-align: right;
-    padding: 1px;
+    padding: 2px;
 }
 /* functional CSS that should not be modified or overwritten
    unless you know what you are doing */
