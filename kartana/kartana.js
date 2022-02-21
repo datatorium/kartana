@@ -319,7 +319,7 @@ var kartana;
         function Acknowledgement() {
             this.element = document.createElement('div');
             this.element.classList.add('acknowledgement');
-            this.element.innerHTML = "powered by <a href=\"https://kartana.de\" title=\"Autovervollst\u00E4ndigung f\u00FCr Adressformulare\" tabindex=\"-1\">kartana</a>";
+            this.element.innerHTML = "<a href=\"https://kartana.de\" title=\"Autovervollst\u00E4ndigung f\u00FCr Adressformulare\" tabindex=\"-1\">Kartana Adressformular</a>";
         }
         return Acknowledgement;
     }());
