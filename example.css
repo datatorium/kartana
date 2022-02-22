@@ -1,5 +1,6 @@
 /* Adressvorschläge die mit anderen Angaben kollidieren */
-.no-context-match{
+.no-context-match .context,
+.no-context-match.highlighted .context{
     color: #aaa;
 }
 
