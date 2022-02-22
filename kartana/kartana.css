@@ -49,6 +49,9 @@
     transition-property: visibility;
     transition-delay: 50ms;
 }
+.kartana.combobox > .menu.align-right{
+    right: 0;
+}
 .kartana.combobox > .input:focus + .menu,
 .kartana.combobox > .input + .menu:active{
     visibility: visible;

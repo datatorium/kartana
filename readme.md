@@ -13,15 +13,22 @@ Live-Demo und Anleitungen findest du auf [kartana.de](https://kartana.de).
 
 ![Screenshot](example.jpeg)
 
+
+## Version 1.2
+Release am 22.02.2022
+
+**Client**
+* Das Vorschlagsmenü wird nun rechtsbündig angezeigt, wenn auf diese Weise horizontales Scrollen vermieden werden kann.
+
 ## Version 1.1
 Release am 30.01.2022
 
-API
+**API**
 * Vorschläge für Straßen berücksichtigen nun auch den Ortsnamen (statt bisher nur die Postleitzahl).
 * Vorschläge für Postleitzahlen berücksichtigen nun auch den Ortsnamen
 * Fix für Synonyme 
 
-Client
+**Client**
 * Mit ESC kann nun das Vorschlagsmenü geschlossen werden. Bei geschlossenem Menü wird mit TAB die Eingabe unverändert übernommen. 
 
 

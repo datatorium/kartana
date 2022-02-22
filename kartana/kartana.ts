@@ -225,6 +225,24 @@ namespace kartana{
             this.isClosed = false;
             this.element.classList.remove('closed')
         }
+        alignRight(){
+            this.element.classList.add('align-right')
+        }
+        alignLeft(){
+            this.element.classList.remove('align-right')
+        }
+        align(){
+            let clientWidth = document.documentElement.clientWidth;
+            let clientRect = this.element.getBoundingClientRect();
+            let spaceLeft = clientRect.left;
+            let spaceRight = clientWidth - clientRect.right;
+
+            if(spaceRight < 0 && spaceLeft > 0){
+                this.alignRight();
+            }else{
+                this.alignLeft();
+            }
+        }
         requestSuggestions(){
             API.complete(this.handleSuggestions.bind(this), {
                 version: '1.1',
@@ -244,13 +262,14 @@ namespace kartana{
             this.reset();
             addresses.forEach((address, index) => {
                 let option = new Option(this, index, address);
-                this.options.push(option)
-                this.element.appendChild(option.element)
+                this.options.push(option);
+                this.element.appendChild(option.element);
             })
             if(this.options.length > 0){
                 this.highlightOption(0);
-                let acknowledgement = new Acknowledgement()
-                this.element.appendChild(acknowledgement.element)
+                let acknowledgement = new Acknowledgement();
+                this.element.appendChild(acknowledgement.element);
+                this.align();
             }
         }
         handleKeyDown(event){

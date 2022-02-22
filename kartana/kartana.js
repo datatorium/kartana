@@ -229,6 +229,24 @@ var kartana;
             this.isClosed = false;
             this.element.classList.remove('closed');
         };
+        SuggestionBox.prototype.alignRight = function () {
+            this.element.classList.add('align-right');
+        };
+        SuggestionBox.prototype.alignLeft = function () {
+            this.element.classList.remove('align-right');
+        };
+        SuggestionBox.prototype.align = function () {
+            var clientWidth = document.documentElement.clientWidth;
+            var clientRect = this.element.getBoundingClientRect();
+            var spaceLeft = clientRect.left;
+            var spaceRight = clientWidth - clientRect.right;
+            if (spaceRight < 0 && spaceLeft > 0) {
+                this.alignRight();
+            }
+            else {
+                this.alignLeft();
+            }
+        };
         SuggestionBox.prototype.requestSuggestions = function () {
             API.complete(this.handleSuggestions.bind(this), {
                 version: '1.1',
@@ -256,6 +274,7 @@ var kartana;
                 this.highlightOption(0);
                 var acknowledgement = new Acknowledgement();
                 this.element.appendChild(acknowledgement.element);
+                this.align();
             }
         };
         SuggestionBox.prototype.handleKeyDown = function (event) {
