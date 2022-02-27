@@ -112,9 +112,9 @@ namespace kartana{
     }
     class Address {
         id: string;
-        private [AddressFieldType.postcode]: AddressField;
-        private [AddressFieldType.municipality]: AddressField;
-        private [AddressFieldType.street]: AddressField;
+        [AddressFieldType.postcode]: AddressField;
+        [AddressFieldType.municipality]: AddressField;
+        [AddressFieldType.street]: AddressField;
         static register: {[id: string]: Address} = {}
         constructor(id){
             this.id = id
