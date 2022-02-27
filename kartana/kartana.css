@@ -43,6 +43,9 @@
     position: absolute;
     z-index: 999;
     list-style-type: none;
+    box-sizing: border-box;
+    width: max-content;
+    min-width: 100%;
     margin: 0;
     overflow: auto;
     visibility: hidden;
@@ -52,10 +55,12 @@
 .kartana.combobox > .menu.align-right{
     right: 0;
 }
+.kartana.combobox > .menu .option{
+    white-space: nowrap;
+}
 .kartana.combobox > .input:focus + .menu,
 .kartana.combobox > .input + .menu:active{
     visibility: visible;
     transition-property: visibility;
     transition-delay: 0ms;
 }
-
