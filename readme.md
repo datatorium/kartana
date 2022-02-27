@@ -14,7 +14,7 @@ Live-Demo und Anleitungen findest du auf [kartana.de](https://kartana.de).
 ![Screenshot](example.jpeg)
 
 ## Version 1.3
-Release am ____.2022
+Release am 27.02.2022
 
 **Client**
 * Wordumbrüche in Adressvorschlägen werden standardmäßig vermieden.
