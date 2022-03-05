@@ -1,0 +1,19 @@
+{
+    "name": "kartana/autocomplete",
+    "description": "Address Autocomplete",
+    "type": "shopware-platform-plugin",
+    "version": "1.0",
+    "license": "CC BY 3.0 DE",
+    "autoload": {
+        "psr-4": {
+            "KartanaAutocomplete\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "KartanaAutocomplete\\KartanaAutocomplete",
+        "label": {
+            "de-DE": "Kartana Autocomplete Plugin",
+            "en-GB": "Kartana Autocomplete Plugin"
+        }
+    }
+}

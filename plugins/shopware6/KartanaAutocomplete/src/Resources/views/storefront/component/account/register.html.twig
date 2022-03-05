@@ -1,0 +1,9 @@
+{% sw_extends '@Storefront/storefront/component/account/register.html.twig' %}
+
+{% block component_account_register_required_fields %}
+    <p class="register-required-info">
+        {{ "general.requiredFields"|trans|sw_sanitize }}<br/>
+        <!-- Kartana: acknowledgement added -->
+        {{ "kartana.acknowledgement"|trans|sw_sanitize }} <a href="https://kartana.de" target="_blank">kartana.de</a>.
+    </p>
+{% endblock %}

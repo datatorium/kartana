@@ -1,0 +1,22 @@
+{
+    "name": "KartanaAutocomplete",
+    "author": "kartana.de",
+    "views": [
+        "@Storefront",
+        "@Plugins",
+        "@KartanaAutocomplete"
+    ],
+    "style": [
+        "app/storefront/src/scss/overrides.scss",
+        "@Storefront",
+        "app/storefront/src/scss/base.scss"
+    ],
+    "script": [
+        "@Storefront",
+        "app/storefront/dist/storefront/js/kartana-autocomplete.js"
+    ],
+    "asset": [
+        "@Storefront",
+        "app/storefront/src/assets"
+    ]
+}

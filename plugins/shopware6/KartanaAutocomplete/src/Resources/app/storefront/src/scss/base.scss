@@ -1,0 +1,80 @@
+.kartana .menu {
+    border-color: $gray-400;
+    border-radius: $border-radius-lg;
+}
+.kartana .option.highlighted{
+    background: $gray-200;
+}
+.kartana .option:hover{
+    background: $gray-200;
+}
+.kartana .option.no-context-match .context{
+    color: $gray-500;
+}
+/* default values that can be overwritten by more specific selectors */
+.kartana ul{
+    /* can be overwritten by .kartana .menu */
+    width: 100%;
+    max-height: 100px;
+    background: #fff;
+    border: 1px solid #aaa;
+    padding: 0;
+}
+.kartana > input + ul > li:hover{
+    /* can be overwritten by .kartana .option:hover */
+    cursor: pointer;
+    background: #eee;
+}
+.kartana > input + ul > li.highlighted{
+    /* can be overwritten by .kartana .option.highlighted */
+    background: #ccc;
+}
+.kartana > input + ul > div {
+    /* can be overwritten by .kartana .menu.acknowledgement
+    You are allowed to remove the link to kartana.de (display: none)
+    if you include a similar link to kartana.de on the same page
+    */
+    font-size: 0.5em;
+    background: #eee;
+    text-align: right;
+    padding: 2px;
+}
+/* functional CSS that should not be modified or overwritten
+   unless you know what you are doing */
+.kartana.combobox{
+    position: relative;
+}
+.kartana.combobox > .input{
+    box-sizing: border-box;
+    width: 100%;
+}
+.kartana.combobox > .menu:empty,
+.kartana.combobox > .menu.closed {
+    display: none;
+}
+.kartana.combobox > .menu{
+    position: absolute;
+    z-index: 999;
+    list-style-type: none;
+    box-sizing: border-box;
+    width: max-content;
+    min-width: 100%;
+    margin: 0;
+    overflow: auto;
+    visibility: hidden;
+    transition-property: visibility;
+    transition-delay: 50ms;
+}
+.kartana.combobox > .menu.align-right{
+    right: 0;
+}
+.kartana.combobox > .menu .option{
+    white-space: nowrap;
+    padding: 4px 20px 4px 4px;
+}
+.kartana.combobox > .input:focus + .menu,
+.kartana.combobox > .input + .menu:active{
+    visibility: visible;
+    transition-property: visibility;
+    transition-delay: 0ms;
+}

@@ -6,25 +6,26 @@ namespace kartana{
         UP = 38,
         DOWN = 40
     }
-    export enum AddressFieldType {
+    enum AddressFieldType {
         postcode = 'postcode',
         municipality = 'municipality',
         street = 'street'
     }
-    export interface AddressSchema{
+    interface AddressSchema{
         [AddressFieldType.postcode]?: string,
         [AddressFieldType.municipality]?: string,
-        [AddressFieldType.street]?: string
+        [AddressFieldType.street]?: string,
+        state?: string
     }
-    export interface CompletionRequest{
+    interface CompletionRequest{
         version: '1.1'
         complete: AddressFieldType;
-        address?: AddressSchema;
+        address: AddressSchema;
     }
-    export interface CompletionResponse{
+    interface CompletionResponse{
         suggestions: AddressSchema[]
     }
-    export type CompletionCallback = (response: CompletionResponse) => void;
+    type CompletionCallback = (response: CompletionResponse) => void;
     class Throttler {
         private lastCall: number;
         private timeoutId: number;
@@ -111,7 +112,7 @@ namespace kartana{
         }
     }
     class Address {
-        id: string;
+        readonly id: string;
         [AddressFieldType.postcode]: AddressField;
         [AddressFieldType.municipality]: AddressField;
         [AddressFieldType.street]: AddressField;
@@ -301,7 +302,6 @@ namespace kartana{
                 event.preventDefault();
                 event.stopPropagation();
             }
-
         }
         highlightOption(index){
             if(this.highlightedOptionIndex !== undefined) {
@@ -405,7 +405,7 @@ namespace kartana{
             this.suggestionBox.selectOption(this);
         }
     }
-    export class Combobox{
+    class Combobox{
         readonly element: HTMLDivElement;
         readonly addressField: AddressField;
         readonly suggestionBox: SuggestionBox;

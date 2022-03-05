@@ -11,7 +11,15 @@ sorgt zugleich für eine verbesserte Datenqualität. Tippfehler gehören der Ver
 Live-Demo und Anleitungen findest du auf [kartana.de](https://kartana.de).
 
 
-![Screenshot](example.jpeg)
+![Screenshot](examples/example.jpeg)
+
+License: [CC BY 3.0 DE](https://creativecommons.org/licenses/by/3.0/de/)
+
+## Version 1.4
+Release am 05.03.2022
+
+* Shopware Plugin 1.0
+* Kleinere nicht-funktionale Anpassungen des Kartana-Klienten.
 
 ## Version 1.3
 Release am 27.02.2022
