@@ -18,7 +18,7 @@ var kartana;
         AddressFieldType["postcode"] = "postcode";
         AddressFieldType["municipality"] = "municipality";
         AddressFieldType["street"] = "street";
-    })(AddressFieldType = kartana.AddressFieldType || (kartana.AddressFieldType = {}));
+    })(AddressFieldType || (AddressFieldType = {}));
     var Throttler = /** @class */ (function () {
         function Throttler(minDelay, maxDelay) {
             this.minDelay = minDelay;
@@ -442,10 +442,10 @@ var kartana;
         });
         return Combobox;
     }());
-    kartana.Combobox = Combobox;
     function init() {
         document.querySelectorAll('input[data-kartana-field]').forEach(function (e) { return new Combobox(e); });
     }
     kartana.init = init;
 })(kartana || (kartana = {}));
 window.addEventListener('load', kartana.init);
+//# sourceMappingURL=kartana.js.map
