@@ -16,6 +16,14 @@
     /* can be overwritten by .kartana .option.highlighted */
     background: #ccc;
 }
+/* clears the 'X' in the search field from Internet Explorer */
+.kartana > input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }
+.kartana > input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
+/* clears the 'X' in the search field from Chrome */
+.kartana > input[type="search"]::-webkit-search-decoration,
+.kartana > input[type="search"]::-webkit-search-cancel-button,
+.kartana > input[type="search"]::-webkit-search-results-button,
+.kartana > input[type="search"]::-webkit-search-results-decoration { display: none; }
 .kartana > input + ul > div {
     /* can be overwritten by .kartana .menu.acknowledgement
     You are allowed to remove the link to kartana.de (display: none)
